@@ -1,0 +1,20 @@
+[versions]
+junit = "5.10.0"
+kotlin = "1.9.0"
+
+[plugins]
+buildconfig = "com.github.gmazzo.buildconfig:4.1.2"
+kotlin-jvm = {id = "org.jetbrains.kotlin.jvm", version.ref="kotlin"}
+ksp = "com.google.devtools.ksp:1.9.0-1.0.13"
+spotless = "com.diffplug.spotless:6.20.0"
+
+[libraries]
+auto-annotations = "com.google.auto.service:auto-service-annotations:1.1.1"
+auto-ksp = "dev.zacsweers.autoservice:auto-service-ksp:1.1.0"
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+junit-legacy = "junit:junit:4.13.2"
+kotlin-compiler = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable", version.ref = "kotlin" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin"}
+kct = "dev.zacsweers.kctfork:core:0.3.0"
+truth = "com.google.truth:truth:1.1.5"
