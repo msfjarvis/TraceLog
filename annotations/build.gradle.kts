@@ -1,12 +1,3 @@
 plugins {
-  alias(libs.plugins.kotlin.jvm)
-  `maven-publish`
+  `tracelog-kotlin-library`
 }
-
-group = "dev.msfjarvis.tracelog"
-
-version = "1.0.0-SNAPSHOT"
-
-kotlin.jvmToolchain(11)
-
-kotlin.explicitApi()

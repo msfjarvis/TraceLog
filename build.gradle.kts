@@ -1,6 +1,5 @@
 plugins {
   alias(libs.plugins.spotless)
-  alias(libs.plugins.kotlin.jvm) apply false
 }
 
 spotless {

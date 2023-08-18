@@ -1,19 +1,10 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-  alias(libs.plugins.kotlin.jvm)
+  `tracelog-kotlin-library`
   alias(libs.plugins.ksp)
   alias(libs.plugins.buildconfig)
-  `maven-publish`
 }
-
-group = "dev.msfjarvis.tracelog"
-
-version = "1.0.0-SNAPSHOT"
-
-kotlin.jvmToolchain(11)
-
-kotlin.explicitApi()
 
 buildConfig {
   packageName("${group}.compiler.plugin")
