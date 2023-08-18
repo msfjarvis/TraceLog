@@ -1,27 +1,18 @@
 package dev.msfjarvis.tracelog.compiler.plugin
 
+import com.google.common.truth.Truth.assertThat
 import com.tschuchort.compiletesting.KotlinCompilation
 import com.tschuchort.compiletesting.KotlinCompilation.ExitCode
+import com.tschuchort.compiletesting.PluginOption
 import com.tschuchort.compiletesting.SourceFile.Companion.kotlin
-import java.io.ByteArrayOutputStream
-import java.io.PrintStream
-import java.nio.charset.StandardCharsets
+import org.jetbrains.kotlin.compiler.plugin.CliOption
+import org.jetbrains.kotlin.compiler.plugin.CommandLineProcessor
 import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 
 @OptIn(ExperimentalCompilerApi::class)
 class DebugLogTransformerTest {
-
-  private val standardOut = System.out
-  private val outputStreamCaptor = ByteArrayOutputStream()
-
-  @AfterEach
-  fun tearDown() {
-    System.setOut(standardOut)
-  }
 
   @Test
   fun `compiler plugin successfully transforms code`() {
@@ -30,6 +21,10 @@ class DebugLogTransformerTest {
             "SourceFile.kt",
             """
       import ${BuildConfig.KOTLIN_PLUGIN_GROUP}.annotations.DebugLog 
+      public val messages = mutableListOf<String>()
+      fun recordMessage(message: Any?) {
+        messages += message.toString()
+      }
       
       @DebugLog
       fun transformable() {
@@ -62,9 +57,15 @@ class DebugLogTransformerTest {
     val result =
         KotlinCompilation()
             .apply {
+              val processor = TracingCommandLineProcessor()
+              pluginOptions = buildList {
+                add(
+                    processor.option(
+                        TracingCommandLineProcessor.OPTION_LOGGER_FUNCTION, "recordMessage"))
+              }
               sources = listOf(srcFile)
               compilerPluginRegistrars = listOf(TracingCompilerPluginRegistrar())
-              commandLineProcessors = listOf(TracingCommandLineProcessor())
+              commandLineProcessors = listOf(processor)
               noOptimize = true
 
               inheritClassPath = true
@@ -73,24 +74,24 @@ class DebugLogTransformerTest {
             .compile()
     assertEquals(ExitCode.OK, result.exitCode)
 
-    System.setOut(PrintStream(outputStreamCaptor))
     val kClazz = result.classLoader.loadClass("SourceFileKt")
     val transformableWithReturnValue =
         kClazz.declaredMethods.first { it.name == "transformableWithReturnValue" }
     val retVal = transformableWithReturnValue.invoke(null)
-    assertInstanceOf(String::class.java, retVal)
-    assertEquals("Return value!", retVal)
-    assertEquals(
-        """
-        ⇢ transformableWithReturnValue()
-        In a transformable function!
-        ⇠ transformableWithReturnValue [] = Return value!
-      """
-            .trimIndent(),
-        outputStreamCaptor
-            .toString(StandardCharsets.UTF_8)
-            .trim()
-            .replace("\\[.*]".toRegex(), "[]"),
-    )
+    assertThat(retVal).isInstanceOf(String::class.java)
+    assertThat(retVal).isEqualTo("Return value!")
+    val msgField = kClazz.declaredFields.first { it.name == "messages" }
+    msgField.isAccessible = true
+    val messages = msgField.get(null) as? List<*>
+    assertThat(messages).isNotNull()
+    assertThat(messages).contains("⇢ transformableWithReturnValue()")
+    assertThat((messages?.last() as? String)?.replace("\\[.*]".toRegex(), "[]"))
+        .isEqualTo(
+            "⇠ transformableWithReturnValue [] = Return value!",
+        )
+  }
+
+  private fun CommandLineProcessor.option(key: CliOption, value: Any?): PluginOption {
+    return PluginOption(pluginId, key.optionName, value.toString())
   }
 }
