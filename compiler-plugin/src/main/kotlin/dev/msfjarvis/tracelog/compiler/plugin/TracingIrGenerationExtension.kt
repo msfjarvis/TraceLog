@@ -20,7 +20,7 @@ public class TracingIrGenerationExtension(
     val debugLogAnnotation =
         pluginContext.referenceClass(
             ClassId(
-                FqName("${BuildConfig.KOTLIN_PLUGIN_GROUP}.annotations"),
+                FqName("${BuildConfig.KOTLIN_PLUGIN_GROUP}.runtime.annotations"),
                 Name.identifier("DebugLog"),
             ))
     if (debugLogAnnotation == null) {

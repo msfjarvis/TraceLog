@@ -2,7 +2,7 @@ package dev.msfjarvis.tracelog.sample
 
 import com.github.ajalt.mordant.rendering.TextColors.*
 import com.github.ajalt.mordant.terminal.Terminal
-import dev.msfjarvis.tracelog.annotations.DebugLog
+import dev.msfjarvis.tracelog.runtime.annotations.DebugLog
 
 private val messages = arrayListOf<String>()
 

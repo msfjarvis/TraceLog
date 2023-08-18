@@ -18,6 +18,6 @@ tasks.withType<KotlinCompile>().configureEach {
 
 dependencies {
   kotlinCompilerPluginClasspath(projects.compilerPlugin)
-  implementation(projects.annotations)
+  implementation(projects.runtime)
   implementation(libs.mordant)
 }

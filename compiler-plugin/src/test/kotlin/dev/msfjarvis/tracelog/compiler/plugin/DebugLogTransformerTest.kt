@@ -20,7 +20,7 @@ class DebugLogTransformerTest {
         kotlin(
             "SourceFile.kt",
             """
-      import ${BuildConfig.KOTLIN_PLUGIN_GROUP}.annotations.DebugLog 
+      import ${BuildConfig.KOTLIN_PLUGIN_GROUP}.runtime.annotations.DebugLog 
       public val messages = mutableListOf<String>()
       fun recordMessage(message: Any?) {
         messages += message.toString()
