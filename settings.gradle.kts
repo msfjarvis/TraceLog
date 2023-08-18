@@ -14,9 +14,10 @@ plugins { id("org.gradle.toolchains.foojay-resolver-convention") version "0.7.0"
 rootProject.name = "tracelog"
 
 include(
-    "annotations",
-    "compiler-plugin",
-    "gradle-plugin",
+  "annotations",
+  "compiler-plugin",
+  "gradle-plugin",
+  "sample-jvm",
 )
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
