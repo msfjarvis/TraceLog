@@ -1,14 +1,12 @@
-plugins {
-  alias(libs.plugins.spotless)
-}
+plugins { alias(libs.plugins.spotless) }
 
 spotless {
   kotlin {
     target("**/*.kt")
-    ktfmt()
+    ktfmt().googleStyle()
   }
   kotlinGradle {
     target("**/*.kts")
-    ktfmt()
+    ktfmt().googleStyle()
   }
 }

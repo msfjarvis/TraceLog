@@ -1,3 +1,1 @@
-plugins {
-  `tracelog-kotlin-library`
-}
+plugins { `tracelog-kotlin-library` }

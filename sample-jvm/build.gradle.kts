@@ -5,9 +5,7 @@ plugins {
   application
 }
 
-application {
-  mainClass.set("dev.msfjarvis.tracelog.sample.MainKt")
-}
+application { mainClass.set("dev.msfjarvis.tracelog.sample.MainKt") }
 
 tasks.withType<KotlinCompile>().configureEach {
   compilerOptions.freeCompilerArgs.addAll(

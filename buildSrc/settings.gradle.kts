@@ -9,11 +9,7 @@ pluginManagement {
 
 dependencyResolutionManagement {
   repositories { mavenCentral() }
-  versionCatalogs {
-    maybeCreate("libs").apply {
-      from(files("../gradle/libs.versions.toml"))
-    }
-  }
+  versionCatalogs { maybeCreate("libs").apply { from(files("../gradle/libs.versions.toml")) } }
 }
 
 rootProject.name = "buildSrc"

@@ -16,10 +16,11 @@ public class TracingCompilerPluginRegistrar : CompilerPluginRegistrar() {
 
   override fun ExtensionStorage.registerExtensions(configuration: CompilerConfiguration) {
     val messageCollector =
-        configuration.get(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY, MessageCollector.NONE)
+      configuration.get(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY, MessageCollector.NONE)
     val loggerFunction = configuration[LOGGER_FUNCTION] ?: "kotlin.io.println"
 
     IrGenerationExtension.registerExtension(
-        TracingIrGenerationExtension(messageCollector, loggerFunction))
+      TracingIrGenerationExtension(messageCollector, loggerFunction)
+    )
   }
 }

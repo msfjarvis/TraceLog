@@ -1,5 +1,3 @@
 plugins { `kotlin-dsl` }
 
-dependencies {
-  implementation(libs.kotlin.gradle.plugin)
-}
+dependencies { implementation(libs.kotlin.gradle.plugin) }

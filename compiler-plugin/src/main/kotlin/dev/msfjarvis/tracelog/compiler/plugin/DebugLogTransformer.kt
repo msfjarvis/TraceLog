@@ -37,32 +37,37 @@ import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 
 public class DebugLogTransformer(
-    private val pluginContext: IrPluginContext,
-    private val annotationClass: IrClassSymbol,
-    private val logFunction: IrSimpleFunctionSymbol,
+  private val pluginContext: IrPluginContext,
+  private val annotationClass: IrClassSymbol,
+  private val logFunction: IrSimpleFunctionSymbol,
 ) : IrElementTransformerVoidWithContext() {
   private val typeUnit = pluginContext.irBuiltIns.unitType
   private val typeThrowable = pluginContext.irBuiltIns.throwableType
 
   private val classMonotonic =
-      pluginContext.referenceClass(
-          ClassId(KOTLIN_TIME_FQNAME, Name.identifier("TimeSource.Monotonic")))!!
+    pluginContext.referenceClass(
+      ClassId(KOTLIN_TIME_FQNAME, Name.identifier("TimeSource.Monotonic"))
+    )!!
 
   private val funMarkNow =
-      pluginContext
-          .referenceFunctions(
-              CallableId(
-                  KOTLIN_TIME_FQNAME.child(Name.identifier("TimeSource")),
-                  Name.identifier("markNow")))
-          .single()
+    pluginContext
+      .referenceFunctions(
+        CallableId(
+          KOTLIN_TIME_FQNAME.child(Name.identifier("TimeSource")),
+          Name.identifier("markNow")
+        )
+      )
+      .single()
 
   private val funElapsedNow =
-      pluginContext
-          .referenceFunctions(
-              CallableId(
-                  KOTLIN_TIME_FQNAME.child(Name.identifier("TimeMark")),
-                  Name.identifier("elapsedNow")))
-          .single()
+    pluginContext
+      .referenceFunctions(
+        CallableId(
+          KOTLIN_TIME_FQNAME.child(Name.identifier("TimeMark")),
+          Name.identifier("elapsedNow")
+        )
+      )
+      .single()
 
   override fun visitFunctionNew(declaration: IrFunction): IrStatement {
     val body = declaration.body
@@ -86,14 +91,15 @@ public class DebugLogTransformer(
   }
 
   private fun IrBuilderWithScope.irDebugExit(
-      function: IrFunction,
-      startTime: IrValueDeclaration,
-      result: IrExpression? = null
+    function: IrFunction,
+    startTime: IrValueDeclaration,
+    result: IrExpression? = null
   ): IrCall {
     val concat = irConcat()
     concat.addArgument(irString("⇠ ${function.name} ["))
     concat.addArgument(
-        irCall(funElapsedNow).also { call -> call.dispatchReceiver = irGet(startTime) })
+      irCall(funElapsedNow).also { call -> call.dispatchReceiver = irGet(startTime) }
+    )
     if (result != null) {
       concat.addArgument(irString("] = "))
       concat.addArgument(result)
@@ -109,43 +115,44 @@ public class DebugLogTransformer(
       +irDebugEnter(function)
 
       val startTime =
-          irTemporary(
-              irCall(funMarkNow).also { call ->
-                call.dispatchReceiver = irGetObject(classMonotonic)
-              })
+        irTemporary(
+          irCall(funMarkNow).also { call -> call.dispatchReceiver = irGetObject(classMonotonic) }
+        )
 
       val tryBlock =
-          irBlock(resultType = function.returnType) {
-                for (statement in body.statements) +statement
-                if (function.returnType == typeUnit) +irDebugExit(function, startTime)
-              }
-              .transform(DebugLogReturnTransformer(function, startTime), null)
+        irBlock(resultType = function.returnType) {
+            for (statement in body.statements) +statement
+            if (function.returnType == typeUnit) +irDebugExit(function, startTime)
+          }
+          .transform(DebugLogReturnTransformer(function, startTime), null)
 
       val throwable =
-          buildVariable(
-              scope.getLocalDeclarationParent(),
-              startOffset,
-              endOffset,
-              IrDeclarationOrigin.CATCH_PARAMETER,
-              Name.identifier("t"),
-              typeThrowable)
+        buildVariable(
+          scope.getLocalDeclarationParent(),
+          startOffset,
+          endOffset,
+          IrDeclarationOrigin.CATCH_PARAMETER,
+          Name.identifier("t"),
+          typeThrowable
+        )
 
       +IrTryImpl(startOffset, endOffset, tryBlock.type).also { irTry ->
         irTry.tryResult = tryBlock
         irTry.catches +=
-            irCatch(
-                throwable,
-                irBlock {
-                  +irDebugExit(function, startTime, irGet(throwable))
-                  +irThrow(irGet(throwable))
-                })
+          irCatch(
+            throwable,
+            irBlock {
+              +irDebugExit(function, startTime, irGet(throwable))
+              +irThrow(irGet(throwable))
+            }
+          )
       }
     }
   }
 
   private inner class DebugLogReturnTransformer(
-      private val function: IrFunction,
-      private val startTime: IrVariable
+    private val function: IrFunction,
+    private val startTime: IrVariable
   ) : IrElementTransformerVoidWithContext() {
     override fun visitReturn(expression: IrReturn): IrExpression {
       if (expression.returnTargetSymbol != function.symbol) return super.visitReturn(expression)

@@ -12,44 +12,49 @@ import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 
 public class TracingIrGenerationExtension(
-    private val messageCollector: MessageCollector,
-    private val loggerFunction: String
+  private val messageCollector: MessageCollector,
+  private val loggerFunction: String
 ) : IrGenerationExtension {
 
   override fun generate(moduleFragment: IrModuleFragment, pluginContext: IrPluginContext) {
     val debugLogAnnotation =
-        pluginContext.referenceClass(
-            ClassId(
-                FqName("${BuildConfig.KOTLIN_PLUGIN_GROUP}.runtime.annotations"),
-                Name.identifier("DebugLog"),
-            ))
+      pluginContext.referenceClass(
+        ClassId(
+          FqName("${BuildConfig.KOTLIN_PLUGIN_GROUP}.runtime.annotations"),
+          Name.identifier("DebugLog"),
+        )
+      )
     if (debugLogAnnotation == null) {
       messageCollector.report(CompilerMessageSeverity.ERROR, "Failed to find 'DebugLog' annotation")
       return
     }
     val loggerFun =
-        pluginContext.referenceFunctions(loggerFunction.toCallableId()).firstOrNull {
-          val parameters = it.owner.valueParameters
-          parameters.size == 1 && parameters[0].type.isNullableAny()
-        }
+      pluginContext.referenceFunctions(loggerFunction.toCallableId()).firstOrNull {
+        val parameters = it.owner.valueParameters
+        parameters.size == 1 && parameters[0].type.isNullableAny()
+      }
     if (loggerFun == null) {
       messageCollector.report(
-          CompilerMessageSeverity.ERROR, "Failed to resolve logger method '$loggerFunction'")
+        CompilerMessageSeverity.ERROR,
+        "Failed to resolve logger method '$loggerFunction'"
+      )
       return
     }
     moduleFragment.transform(
-        DebugLogTransformer(pluginContext, debugLogAnnotation, loggerFun), null)
+      DebugLogTransformer(pluginContext, debugLogAnnotation, loggerFun),
+      null
+    )
   }
 
   private fun String.toCallableId(): CallableId {
     val parts = split(".")
     val methodName = parts.last()
     val fqName =
-        if (parts.size == 1) {
-          FqName("")
-        } else {
-          FqName((parts - methodName).joinToString("."))
-        }
+      if (parts.size == 1) {
+        FqName("")
+      } else {
+        FqName((parts - methodName).joinToString("."))
+      }
     return CallableId(fqName, Name.identifier(methodName))
   }
 }

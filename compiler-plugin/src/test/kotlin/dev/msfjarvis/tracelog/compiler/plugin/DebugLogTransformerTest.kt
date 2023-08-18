@@ -17,9 +17,9 @@ class DebugLogTransformerTest {
   @Test
   fun `compiler plugin successfully transforms code`() {
     val srcFile =
-        kotlin(
-            "SourceFile.kt",
-            """
+      kotlin(
+        "SourceFile.kt",
+        """
       import ${BuildConfig.KOTLIN_PLUGIN_GROUP}.runtime.annotations.DebugLog 
       public val messages = mutableListOf<String>()
       fun recordMessage(message: Any?) {
@@ -52,31 +52,32 @@ class DebugLogTransformerTest {
         }
       }
     """
-                .trimIndent())
+          .trimIndent()
+      )
 
     val result =
-        KotlinCompilation()
-            .apply {
-              val processor = TracingCommandLineProcessor()
-              pluginOptions = buildList {
-                add(
-                    processor.option(
-                        TracingCommandLineProcessor.OPTION_LOGGER_FUNCTION, "recordMessage"))
-              }
-              sources = listOf(srcFile)
-              compilerPluginRegistrars = listOf(TracingCompilerPluginRegistrar())
-              commandLineProcessors = listOf(processor)
-              noOptimize = true
+      KotlinCompilation()
+        .apply {
+          val processor = TracingCommandLineProcessor()
+          pluginOptions = buildList {
+            add(
+              processor.option(TracingCommandLineProcessor.OPTION_LOGGER_FUNCTION, "recordMessage")
+            )
+          }
+          sources = listOf(srcFile)
+          compilerPluginRegistrars = listOf(TracingCompilerPluginRegistrar())
+          commandLineProcessors = listOf(processor)
+          noOptimize = true
 
-              inheritClassPath = true
-              messageOutputStream = System.out
-            }
-            .compile()
+          inheritClassPath = true
+          messageOutputStream = System.out
+        }
+        .compile()
     assertEquals(ExitCode.OK, result.exitCode)
 
     val kClazz = result.classLoader.loadClass("SourceFileKt")
     val transformableWithReturnValue =
-        kClazz.declaredMethods.first { it.name == "transformableWithReturnValue" }
+      kClazz.declaredMethods.first { it.name == "transformableWithReturnValue" }
     val retVal = transformableWithReturnValue.invoke(null)
     assertThat(retVal).isInstanceOf(String::class.java)
     assertThat(retVal).isEqualTo("Return value!")
@@ -86,9 +87,9 @@ class DebugLogTransformerTest {
     assertThat(messages).isNotNull()
     assertThat(messages).contains("⇢ transformableWithReturnValue()")
     assertThat((messages?.last() as? String)?.replace("\\[.*]".toRegex(), "[]"))
-        .isEqualTo(
-            "⇠ transformableWithReturnValue [] = Return value!",
-        )
+      .isEqualTo(
+        "⇠ transformableWithReturnValue [] = Return value!",
+      )
   }
 
   private fun CommandLineProcessor.option(key: CliOption, value: Any?): PluginOption {
