@@ -23,4 +23,5 @@ tasks.withType<KotlinCompile>().configureEach {
 dependencies {
   kotlinCompilerPluginClasspath(projects.compilerPlugin)
   implementation(projects.annotations)
+  implementation(libs.mordant)
 }
