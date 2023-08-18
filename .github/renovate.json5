@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":dependencyDashboard",
+    "helpers:pinGitHubActionDigests",
+    "github>msfjarvis/shared-workflows//renovate/automerge"
+  ],
+  "branchConcurrentLimit": 15,
+  "packageRules": [
+    {
+      matchDatasources: [
+        "maven"
+      ],
+      registryUrls: [
+        "https://repo1.maven.org/maven2",
+        "https://plugins.gradle.org/m2/",
+      ],
+    },
+  ],
+}
