@@ -11,6 +11,8 @@ tasks.withType<KotlinCompile>().configureEach {
   compilerOptions.freeCompilerArgs.addAll(
     "-P",
     "plugin:dev.msfjarvis.tracelog:loggerFunction=dev.msfjarvis.tracelog.sample.recordMessage",
+    "-P",
+    "plugin:dev.msfjarvis.tracelog:debugAnnotation=dev/msfjarvis/tracelog/runtime/annotations/DebugLog",
   )
 }
 

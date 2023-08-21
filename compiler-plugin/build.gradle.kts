@@ -23,8 +23,6 @@ dependencies {
   compileOnly(libs.kotlin.compiler)
   ksp(libs.auto.ksp)
   compileOnly(libs.auto.annotations)
-  compileOnly(projects.runtime)
-  testImplementation(projects.runtime)
   testImplementation(libs.kct)
   testImplementation(libs.junit.jupiter.api)
   testImplementation(libs.junit.jupiter.engine)

@@ -18,9 +18,10 @@ public class TracingCompilerPluginRegistrar : CompilerPluginRegistrar() {
     val messageCollector =
       configuration.get(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY, MessageCollector.NONE)
     val loggerFunction = configuration[LOGGER_FUNCTION] ?: "kotlin.io.println"
+    val annotationName = requireNotNull(configuration[ANNOTATION_NAME])
 
     IrGenerationExtension.registerExtension(
-      TracingIrGenerationExtension(messageCollector, loggerFunction)
+      TracingIrGenerationExtension(messageCollector, loggerFunction, annotationName)
     )
   }
 }

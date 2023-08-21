@@ -13,17 +13,12 @@ import org.jetbrains.kotlin.name.Name
 
 public class TracingIrGenerationExtension(
   private val messageCollector: MessageCollector,
-  private val loggerFunction: String
+  private val loggerFunction: String,
+  private val annotationName: String
 ) : IrGenerationExtension {
 
   override fun generate(moduleFragment: IrModuleFragment, pluginContext: IrPluginContext) {
-    val debugLogAnnotation =
-      pluginContext.referenceClass(
-        ClassId(
-          FqName("${BuildConfig.KOTLIN_PLUGIN_GROUP}.runtime.annotations"),
-          Name.identifier("DebugLog"),
-        )
-      )
+    val debugLogAnnotation = pluginContext.referenceClass(ClassId.fromString(annotationName))
     if (debugLogAnnotation == null) {
       messageCollector.report(CompilerMessageSeverity.ERROR, "Failed to find 'DebugLog' annotation")
       return

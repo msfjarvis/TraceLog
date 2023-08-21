@@ -16,12 +16,21 @@ class DebugLogTransformerTest {
 
   @Test
   fun `compiler plugin successfully transforms code`() {
+    val annotationSrcFile =
+      kotlin(
+        "DebugLog.kt",
+        """
+      package dev.msfjarvis.annotation
+      annotation class DebugLog
+    """
+          .trimIndent()
+      )
     val srcFile =
       kotlin(
         "SourceFile.kt",
         """
-      import ${BuildConfig.KOTLIN_PLUGIN_GROUP}.runtime.annotations.DebugLog 
-      public val messages = mutableListOf<String>()
+      import dev.msfjarvis.annotation.DebugLog
+      val messages = mutableListOf<String>()
       fun recordMessage(message: Any?) {
         messages += message.toString()
       }
@@ -63,8 +72,14 @@ class DebugLogTransformerTest {
             add(
               processor.option(TracingCommandLineProcessor.OPTION_LOGGER_FUNCTION, "recordMessage")
             )
+            add(
+              processor.option(
+                TracingCommandLineProcessor.OPTION_ANNOTATION_NAME,
+                "dev/msfjarvis/annotation/DebugLog"
+              )
+            )
           }
-          sources = listOf(srcFile)
+          sources = listOf(annotationSrcFile, srcFile)
           compilerPluginRegistrars = listOf(TracingCompilerPluginRegistrar())
           commandLineProcessors = listOf(processor)
           noOptimize = true
