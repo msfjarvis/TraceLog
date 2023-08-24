@@ -4,7 +4,7 @@ kotlin = "1.9.0"
 
 [plugins]
 buildconfig = "com.github.gmazzo.buildconfig:4.1.2"
-ksp = "com.google.devtools.ksp:1.9.0-1.0.13"
+ksp = "com.google.devtools.ksp:1.9.10-1.0.13"
 spotless = "com.diffplug.spotless:6.20.0"
 
 [libraries]
