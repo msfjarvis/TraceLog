@@ -1,5 +1,5 @@
 plugins {
-  `tracelog-kotlin-library`
+  `tracelog-jvm-library`
   `java-gradle-plugin`
   alias(libs.plugins.buildconfig)
   alias(libs.plugins.ksp)

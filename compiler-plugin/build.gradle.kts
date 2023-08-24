@@ -1,7 +1,7 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-  `tracelog-kotlin-library`
+  `tracelog-jvm-library`
   alias(libs.plugins.ksp)
   alias(libs.plugins.buildconfig)
 }
