@@ -17,5 +17,13 @@
         "https://plugins.gradle.org/m2/",
       ],
     },
+    {
+      "matchPackageNames": [
+        "com.google.devtools.ksp",
+        "org.jetbrains.kotlin:kotlin-gradle-plugin",
+        "org.jetbrains.kotlin:kotlin-compiler-embeddable",
+      ],
+      "groupName": "Kotlin",
+    },
   ],
 }
