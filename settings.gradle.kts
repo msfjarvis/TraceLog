@@ -7,7 +7,24 @@ pluginManagement {
   }
 }
 
-dependencyResolutionManagement { repositories { mavenCentral() } }
+dependencyResolutionManagement {
+  repositories {
+    exclusiveContent {
+      forRepository { google() }
+      filter {
+        includeGroup("com.android.tools")
+        includeGroup("com.android.tools.analytics-library")
+        includeGroup("com.android.tools.build")
+        includeGroup("com.android.tools.ddms")
+        includeGroup("com.android.tools.external.com-intellij")
+        includeGroup("com.android.tools.external.org-jetbrains")
+        includeGroup("com.android.tools.layoutlib")
+        includeGroup("com.android.tools.lint")
+      }
+    }
+    mavenCentral()
+  }
+}
 
 plugins { id("org.gradle.toolchains.foojay-resolver-convention") version "0.7.0" }
 
