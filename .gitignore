@@ -6,6 +6,7 @@ build/
 
 ### IntelliJ IDEA ###
 .idea/.name
+.idea/artifacts/
 .idea/gradle.xml
 .idea/vcs.xml
 .idea/modules.xml
