@@ -35,6 +35,7 @@ include(
   "gradle-plugin",
   "runtime",
   "sample-jvm",
+  "sample-kmp",
 )
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

@@ -1,0 +1,29 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetWithHostTests
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins { id("org.jetbrains.kotlin.multiplatform") }
+
+tasks.withType<KotlinCompile>().configureEach {
+  compilerOptions.freeCompilerArgs.addAll(
+    "-P",
+    "plugin:dev.msfjarvis.tracelog:loggerFunction=recordMessage",
+    "-P",
+    "plugin:dev.msfjarvis.tracelog:debugAnnotation=dev/msfjarvis/tracelog/runtime/annotations/DebugLog",
+  )
+}
+
+fun KotlinNativeTargetWithHostTests.configureTarget() = binaries {
+  executable { entryPoint = "main" }
+}
+
+kotlin {
+  linuxX64 { configureTarget() }
+  mingwX64 { configureTarget() }
+  macosX64 { configureTarget() }
+
+  dependencies {
+    kotlinCompilerPluginClasspath(projects.compilerPlugin)
+    commonMainImplementation(projects.runtime)
+    commonMainImplementation(libs.mordant)
+  }
+}
