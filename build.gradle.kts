@@ -1,4 +1,8 @@
-plugins { alias(libs.plugins.spotless) }
+plugins {
+  alias(libs.plugins.spotless)
+  id("tracelog-jvm-library") apply false
+  id("tracelog-kmp-library") apply false
+}
 
 spotless {
   kotlin {

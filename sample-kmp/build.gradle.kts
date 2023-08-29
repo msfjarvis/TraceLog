@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetWithHostTests
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-plugins { id("org.jetbrains.kotlin.multiplatform") }
+plugins { kotlin("multiplatform") }
 
 tasks.withType<KotlinCompile>().configureEach {
   compilerOptions.freeCompilerArgs.addAll(

@@ -1,4 +1,4 @@
-plugins { `tracelog-kmp-library` }
+plugins { id("tracelog-kmp-library") }
 
 android {
   compileSdk = 33
