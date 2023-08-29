@@ -20,7 +20,9 @@ gradlePlugin.plugins.register("dev.msfjarvis.tracelog") {
 }
 
 dependencies {
-  compileOnly(libs.kotlin.gradle.plugin)
-  ksp(libs.auto.ksp)
+  implementation(platform(embeddedKotlin("bom")))
   compileOnly(libs.auto.annotations)
+  compileOnly(libs.kotlin.gradlePlugin.api)
+  compileOnly(libs.kotlin.stdlib)
+  ksp(libs.auto.ksp)
 }

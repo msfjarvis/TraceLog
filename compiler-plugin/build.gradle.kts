@@ -20,6 +20,7 @@ tasks.test.configure {
 }
 
 dependencies {
+  implementation(platform(embeddedKotlin("bom")))
   compileOnly(libs.kotlin.compiler)
   ksp(libs.auto.ksp)
   compileOnly(libs.auto.annotations)

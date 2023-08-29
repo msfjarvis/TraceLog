@@ -17,6 +17,7 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 dependencies {
+  implementation(platform(embeddedKotlin("bom")))
   kotlinCompilerPluginClasspath(projects.compilerPlugin)
   implementation(projects.runtime)
   implementation(libs.mordant)

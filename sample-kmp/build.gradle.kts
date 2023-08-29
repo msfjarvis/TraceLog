@@ -22,6 +22,7 @@ kotlin {
   macosX64 { configureTarget() }
 
   dependencies {
+    commonMainImplementation(platform(embeddedKotlin("bom")))
     kotlinCompilerPluginClasspath(projects.compilerPlugin)
     commonMainImplementation(projects.runtime)
     commonMainImplementation(libs.mordant)

@@ -20,10 +20,12 @@
     {
       "matchPackageNames": [
         "com.google.devtools.ksp",
-        "org.jetbrains.kotlin:kotlin-gradle-plugin",
         "org.jetbrains.kotlin:kotlin-compiler-embeddable",
+        "org.jetbrains.kotlin:kotlin-gradle-plugin",
+        "org.jetbrains.kotlin:kotlin-gradle-plugin-api",
       ],
       "groupName": "Kotlin",
+      "enabled": false,
     },
   ],
 }
