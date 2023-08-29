@@ -6,7 +6,6 @@ plugins {
 }
 
 buildConfig {
-  val project = projects.compilerPlugin
   packageName("${group}.gradle.plugin")
   useKotlinOutput { internalVisibility = true }
   buildConfigField("String", "KOTLIN_PLUGIN_GROUP", "\"${project.group}\"")

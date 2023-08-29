@@ -3,8 +3,7 @@
 pluginManagement {
   plugins { id("org.gradle.toolchains.foojay-resolver-convention") version "0.7.0" }
   repositories {
-    includeBuild("build-logic")
-    includeBuild("gradle-plugin")
+    includeBuild("../build-logic")
     mavenCentral()
     exclusiveContent {
       forRepository(::google)
@@ -34,11 +33,9 @@ pluginManagement {
     exclusiveContent {
       forRepository(::gradlePluginPortal)
       filter {
-        includeModule("com.diffplug.spotless", "com.diffplug.spotless.gradle.plugin")
-        includeModule("com.diffplug.spotless", "gradle-plugin")
         includeModule(
           "com.github.gmazzo.buildconfig",
-          "com.github.gmazzo.buildconfig.gradle.plugin"
+          "com.github.gmazzo.buildconfig.gradle.plugin",
         )
         includeModule("com.github.gmazzo.buildconfig", "plugin")
       }
@@ -47,32 +44,11 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-  repositories {
-    exclusiveContent {
-      forRepository(::google)
-      filter {
-        includeGroup("com.android.tools")
-        includeGroup("com.android.tools.analytics-library")
-        includeGroup("com.android.tools.build")
-        includeGroup("com.android.tools.ddms")
-        includeGroup("com.android.tools.external.com-intellij")
-        includeGroup("com.android.tools.external.org-jetbrains")
-        includeGroup("com.android.tools.layoutlib")
-        includeGroup("com.android.tools.lint")
-      }
-    }
-    mavenCentral()
-  }
+  repositories { mavenCentral() }
+  versionCatalogs { create("libs") { from(files("../gradle/libs.versions.toml")) } }
 }
 
-rootProject.name = "TraceLog"
-
-include(
-  "compiler-plugin",
-  "runtime",
-  "sample-jvm",
-  "sample-kmp",
-)
+rootProject.name = "TraceLog-Gradle-Plugin"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
