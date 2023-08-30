@@ -1,17 +1,15 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-  id("tracelog-jvm-library")
+  alias(libs.plugins.kotlin.jvm)
   alias(libs.plugins.ksp)
-  alias(libs.plugins.buildconfig)
 }
 
-buildConfig {
-  packageName("${group}.compiler.plugin")
-  useKotlinOutput { internalVisibility = true }
-  buildConfigField("String", "KOTLIN_PLUGIN_GROUP", "\"${project.group}\"")
-  buildConfigField("String", "KOTLIN_PLUGIN_NAME", "\"${project.name}\"")
-  buildConfigField("String", "KOTLIN_PLUGIN_VERSION", "\"${project.version}\"")
+kotlin.jvmToolchain(11)
+
+traceLogBuild {
+  publishing()
+  generateArtifactInfo("dev.msfjarvis.tracelog")
 }
 
 tasks.test.configure {
@@ -20,7 +18,6 @@ tasks.test.configure {
 }
 
 dependencies {
-  implementation(platform(embeddedKotlin("bom")))
   compileOnly(libs.kotlin.compiler)
   ksp(libs.auto.ksp)
   compileOnly(libs.auto.annotations)

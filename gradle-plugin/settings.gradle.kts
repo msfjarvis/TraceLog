@@ -48,6 +48,8 @@ dependencyResolutionManagement {
   versionCatalogs { create("libs") { from(files("../gradle/libs.versions.toml")) } }
 }
 
+plugins { id("dev.msfjarvis.tracelog.settings") }
+
 rootProject.name = "TraceLog-Gradle-Plugin"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

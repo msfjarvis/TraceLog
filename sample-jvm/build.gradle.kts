@@ -1,24 +1,16 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-  id("tracelog-jvm-library")
+  alias(libs.plugins.kotlin.jvm)
+  id("dev.msfjarvis.tracelog")
   application
 }
 
+kotlin.jvmToolchain(11)
+
+traceLog { loggerFunction.set("dev.msfjarvis.tracelog.sample.recordMessage") }
+
 application { mainClass.set("dev.msfjarvis.tracelog.sample.MainKt") }
 
-tasks.withType<KotlinCompile>().configureEach {
-  compilerOptions.freeCompilerArgs.addAll(
-    "-P",
-    "plugin:dev.msfjarvis.tracelog:loggerFunction=dev.msfjarvis.tracelog.sample.recordMessage",
-    "-P",
-    "plugin:dev.msfjarvis.tracelog:debugAnnotation=dev/msfjarvis/tracelog/runtime/annotations/DebugLog",
-  )
-}
-
 dependencies {
-  implementation(platform(embeddedKotlin("bom")))
-  kotlinCompilerPluginClasspath(projects.compilerPlugin)
   implementation(projects.runtime)
   implementation(libs.mordant)
 }

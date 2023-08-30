@@ -20,6 +20,7 @@ pluginManagement {
         includeGroup("com.android.tools.lint")
         includeGroup("com.android.tools.utp")
         includeGroup("com.google.testing.platform")
+        includeModule("com.android.library", "com.android.library.gradle.plugin")
         includeModule("com.android.tools", "annotations")
         includeModule("com.android.tools", "common")
         includeModule("com.android.tools", "desugar_jdk_libs")
@@ -61,9 +62,12 @@ dependencyResolutionManagement {
         includeGroup("com.android.tools.lint")
       }
     }
+    mavenLocal { content { includeModule("dev.msfjarvis.tracelog", "compiler-plugin") } }
     mavenCentral()
   }
 }
+
+plugins { id("dev.msfjarvis.tracelog.settings") }
 
 rootProject.name = "TraceLog"
 

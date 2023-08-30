@@ -39,6 +39,6 @@ dependencyResolutionManagement {
   versionCatalogs { maybeCreate("libs").apply { from(files("../gradle/libs.versions.toml")) } }
 }
 
-rootProject.name = "buildSrc"
+rootProject.name = "build-logic"
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")

@@ -1,6 +1,7 @@
 package dev.msfjarvis.tracelog.compiler.plugin
 
 import com.google.auto.service.AutoService
+import dev.msfjarvis.tracelog.ArtifactInfo
 import org.jetbrains.kotlin.compiler.plugin.AbstractCliOption
 import org.jetbrains.kotlin.compiler.plugin.CliOption
 import org.jetbrains.kotlin.compiler.plugin.CommandLineProcessor
@@ -25,7 +26,7 @@ public class TracingCommandLineProcessor : CommandLineProcessor {
     val OPTION_ANNOTATION_NAME =
       CliOption(
         optionName = "debugAnnotation",
-        valueDescription = "${BuildConfig.KOTLIN_PLUGIN_GROUP}.runtime.annotations.DebugLog",
+        valueDescription = ArtifactInfo.DEFAULT_TRACELOG_ANNOTATION,
         description = ANNOTATION_NAME.toString(),
         required = true,
         allowMultipleOccurrences = false,

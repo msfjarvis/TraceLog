@@ -1,25 +1,43 @@
+@file:Suppress("UnstableApiUsage")
+
+import java.util.Properties
+
 plugins {
-  id("tracelog-jvm-library")
+  alias(libs.plugins.kotlin.jvm)
   `java-gradle-plugin`
-  alias(libs.plugins.buildconfig)
   alias(libs.plugins.ksp)
+  alias(libs.plugins.mavenPublish).apply(false)
+  alias(libs.plugins.dokka).apply(false)
+  alias(libs.plugins.kotlinx.binaryCompatibilityValidator).apply(false)
 }
 
-buildConfig {
-  packageName("${group}.gradle.plugin")
-  useKotlinOutput { internalVisibility = true }
-  buildConfigField("String", "KOTLIN_PLUGIN_GROUP", "\"${project.group}\"")
-  buildConfigField("String", "KOTLIN_PLUGIN_NAME", "\"${project.name}\"")
-  buildConfigField("String", "KOTLIN_PLUGIN_VERSION", "\"${project.version}\"")
+kotlin.jvmToolchain(11)
+
+fun loadParentProperties() {
+  val properties = Properties()
+  file("../gradle.properties").inputStream().use { properties.load(it) }
+
+  properties.forEach { (k, v) ->
+    val key = k.toString()
+    val value = providers.gradleProperty(name).getOrElse(v.toString())
+    extra.set(key, value)
+  }
+}
+
+loadParentProperties()
+
+traceLogBuild {
+  publishing()
+  generateArtifactInfo("dev.msfjarvis.tracelog")
 }
 
 gradlePlugin.plugins.register("dev.msfjarvis.tracelog") {
-  id = group.toString()
-  implementationClass = "$group.gradle.plugin.TraceLogGradlePlugin"
+  id = properties["GROUP"].toString()
+  implementationClass = "${properties["GROUP"]}.gradle.plugin.TraceLogGradlePlugin"
 }
 
 dependencies {
-  implementation(platform(embeddedKotlin("bom")))
+  compileOnly(gradleKotlinDsl())
   compileOnly(libs.auto.annotations)
   compileOnly(libs.kotlin.gradlePlugin.api)
   compileOnly(libs.kotlin.stdlib)

@@ -1,9 +1,17 @@
 [versions]
+kotlin = "1.9.0"
 junit = "5.10.0"
 
 [plugins]
+android-library = { id = "com.android.library", version = "8.1.1" }
 buildconfig = "com.github.gmazzo.buildconfig:4.1.2"
+dokka = { id = "org.jetbrains.dokka", version = "1.8.20" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlinx-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version = "0.13.2" }
 ksp = "com.google.devtools.ksp:1.9.0-1.0.13"
+mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.25.3" }
 spotless = "com.diffplug.spotless:6.21.0"
 
 [libraries]
@@ -14,9 +22,9 @@ junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.re
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 junit-legacy = "junit:junit:4.13.2"
 kct = "dev.zacsweers.kctfork:core:0.3.2"
-kotlin-compiler = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable" }
-kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin" }
-kotlin-gradlePlugin-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin-api" }
-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib" }
+kotlin-compiler = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable", version.ref = "kotlin" }
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-gradlePlugin-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin-api", version.ref = "kotlin" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 mordant = "com.github.ajalt.mordant:mordant:2.1.0"
 truth = "com.google.truth:truth:1.1.5"

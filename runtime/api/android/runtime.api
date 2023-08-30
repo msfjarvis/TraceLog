@@ -1,0 +1,7 @@
+public abstract interface class dev/msfjarvis/tracelog/runtime/TracingConsumer {
+	public abstract fun trace (JLjava/lang/String;Ljava/lang/String;B)V
+}
+
+public abstract interface annotation class dev/msfjarvis/tracelog/runtime/annotations/DebugLog : java/lang/annotation/Annotation {
+}
+
