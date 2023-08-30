@@ -37,10 +37,15 @@ jobs:
         path: ~/.konan
         key: ${{ runner.os }}-gradle-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties', 'gradle/libs.versions.toml') }}
 
-    - name: Run unit tests
+    - name: Setup Gradle caching
       uses: gradle/gradle-build-action@ef76a971e2fa3f867b617efd72f2fbd72cf6f8bc # v2.8.0
       with:
-        arguments: check
         gradle-home-cache-cleanup: true
         cache-read-only: ${{ github.ref != 'refs/heads/main' }}
         dependency-graph: generate-and-submit
+
+    - name: Publish compiler plugin to mavenLocal
+      run: ./gradlew :compiler-plugin:publishToMavenLocal
+
+    - name: Run unit tests
+      run: ./gradlew check
