@@ -55,14 +55,14 @@ jobs:
     if: ${{ always() && needs.create_staging_repository.result == 'success' }}
     steps:
       - name: Discard
-        if: ${{ needs.publish.result != 'success' || needs.publish_windows.result != 'success' }}
+        if: ${{ needs.publish.result != 'success' }}
         uses: nexus-actions/drop-nexus-staging-repo@fe83783967a063540320ace3c8942608246705a1 # v1
         with:
           username: msfjarvis
           password: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
           staging_repository_id: ${{ needs.create_staging_repository.outputs.repository_id }}
       - name: Release
-        if: ${{ needs.publish.result == 'success' && needs.publish_windows.result == 'success' }}
+        if: ${{ needs.publish.result == 'success' }}
         uses: nexus-actions/release-nexus-staging-repo@36161f25ef98cc3821eabb11ab742d2e9d479e52 # v1.2
         with:
           username: msfjarvis
