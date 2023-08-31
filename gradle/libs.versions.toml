@@ -5,7 +5,7 @@ junit = "5.10.0"
 [plugins]
 android-library = { id = "com.android.library", version = "8.1.1" }
 buildconfig = "com.github.gmazzo.buildconfig:4.1.2"
-dokka = { id = "org.jetbrains.dokka", version = "1.8.20" }
+dokka = { id = "org.jetbrains.dokka", version = "1.9.0" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
