@@ -39,7 +39,6 @@ jobs:
       with:
         gradle-home-cache-cleanup: true
         cache-read-only: ${{ github.ref != 'refs/heads/main' }}
-        dependency-graph: generate-and-submit
 
     - name: Publish compiler plugin to mavenLocal
       run: ./gradlew :compiler-plugin:publishToMavenLocal
@@ -54,6 +53,7 @@ jobs:
     runs-on: macos-13
     permissions:
       actions: read
+      contents: write
     steps:
     - name: Checkout repository
       uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
