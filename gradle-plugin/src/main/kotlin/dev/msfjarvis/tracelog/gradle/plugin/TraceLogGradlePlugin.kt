@@ -32,7 +32,7 @@ public class TraceLogGradlePlugin : KotlinCompilerPluginSupportPlugin {
             if (useLocal) {
               it.project(":runtime")
             } else {
-              "dev.msfjarvis.tracelog:runtime:1.0.0-SNAPSHOT"
+              "${ArtifactInfo.GROUP}:${ArtifactInfo.RUNTIME_ARTIFACT}:${ArtifactInfo.VERSION}"
             }
           else -> null
         }
