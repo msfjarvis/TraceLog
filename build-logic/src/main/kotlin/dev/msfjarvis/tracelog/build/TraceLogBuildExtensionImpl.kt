@@ -3,8 +3,10 @@ package dev.msfjarvis.tracelog.build
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.plugins.AppliedPlugin
+import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.SourceSetContainer
+import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.KotlinTopLevelExtensionConfig
 
 class TraceLogBuildExtensionImpl(
@@ -24,6 +26,22 @@ class TraceLogBuildExtensionImpl(
     }
     project.pluginManager.withPlugin("org.jetbrains.kotlin.jvm", kotlinPluginHandler)
     project.pluginManager.withPlugin("org.jetbrains.kotlin.multiplatform", kotlinPluginHandler)
+
+    project.extensions.getByType<PublishingExtension>().repositories {
+      maven {
+        name = "Sonatype"
+        setUrl {
+          val repositoryId =
+            System.getenv("SONATYPE_REPOSITORY_ID")
+              ?: error("Missing env variable: SONATYPE_REPOSITORY_ID")
+          "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/${repositoryId}/"
+        }
+        credentials {
+          username = System.getenv("SONATYPE_USERNAME")
+          password = System.getenv("SONATYPE_PASSWORD")
+        }
+      }
+    }
   }
 
   override fun generateArtifactInfo(basePackage: String) {
