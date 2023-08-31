@@ -31,10 +31,14 @@ class TraceLogBuildExtensionImpl(
       maven {
         name = "Sonatype"
         setUrl {
-          val repositoryId =
-            System.getenv("SONATYPE_REPOSITORY_ID")
-              ?: error("Missing env variable: SONATYPE_REPOSITORY_ID")
-          "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/${repositoryId}/"
+          if (project.findProperty("VERSION_NAME").toString().endsWith("-SNAPSHOT")) {
+            "https://oss.sonatype.org/content/repositories/snapshots/"
+          } else {
+            val repositoryId =
+              System.getenv("SONATYPE_REPOSITORY_ID")
+                ?: error("Missing env variable: SONATYPE_REPOSITORY_ID")
+            "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/${repositoryId}/"
+          }
         }
         credentials {
           username = System.getenv("SONATYPE_USERNAME")
