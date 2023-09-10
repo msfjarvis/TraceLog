@@ -8,7 +8,6 @@ import com.tschuchort.compiletesting.SourceFile.Companion.kotlin
 import org.jetbrains.kotlin.compiler.plugin.CliOption
 import org.jetbrains.kotlin.compiler.plugin.CommandLineProcessor
 import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 @OptIn(ExperimentalCompilerApi::class)
@@ -107,9 +106,8 @@ class DebugLogTransformerTest {
       )
   }
 
-  @Disabled
   @Test
-  fun `nested logger function fails to resolve`() {
+  fun `nested logger function`() {
     val annotationSrcFile =
       kotlin(
         "DebugLog.kt",
@@ -157,9 +155,11 @@ class DebugLogTransformerTest {
       kotlin(
         "Logger.kt",
         """
+      package com.example
       object Logger {
         val messages = mutableListOf<String>()
       
+        @JvmStatic
         fun recordMessage(message: Any?) {
           messages += message.toString()
         }
@@ -176,7 +176,7 @@ class DebugLogTransformerTest {
             add(
               processor.option(
                 TracingCommandLineProcessor.OPTION_LOGGER_FUNCTION,
-                "Logger.recordMessage"
+                "com.example.Logger.recordMessage"
               )
             )
             add(
@@ -204,7 +204,7 @@ class DebugLogTransformerTest {
     assertThat(retVal).isInstanceOf(String::class.java)
     assertThat(retVal).isEqualTo("Return value!")
 
-    val loggerClazz = result.classLoader.loadClass("LoggerKt")
+    val loggerClazz = result.classLoader.loadClass("com.example.Logger")
     val msgField = loggerClazz.declaredFields.first { it.name == "messages" }
     msgField.isAccessible = true
     val messages = msgField.get(null) as? List<*>
