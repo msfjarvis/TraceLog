@@ -21,6 +21,18 @@ traceLog {
 }
 ```
 
+The `loggerFunction` parameter must be a fully qualified to a static method with a single parameter of the type `Any?`.
+
+```kotlin
+fun recordMessage() {} // Bad, no parameter
+fun recordMessage(p0: String, p1: Int) {} // Bad, multiple parameters and incorrect types
+fun recordMessage(p0: Any?) {} // Good, single parameter with correct type
+```
+
+> [!NOTE]
+> Due to a limitation in how TraceLog resolves the logger function, you might need to add `@JvmStatic` on the method
+> for TraceLog to be able to find it. This will be fixed in a future release.
+
 ## Usage
 
 Currently, this prints out a basic textual representation of the method's inputs and execution time. That is,
