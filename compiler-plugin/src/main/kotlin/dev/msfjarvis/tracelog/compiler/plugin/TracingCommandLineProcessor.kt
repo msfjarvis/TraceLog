@@ -28,7 +28,7 @@ public class TracingCommandLineProcessor : CommandLineProcessor {
         optionName = "debugAnnotation",
         valueDescription = ArtifactInfo.DEFAULT_TRACELOG_ANNOTATION,
         description = ANNOTATION_NAME.toString(),
-        required = true,
+        required = false,
         allowMultipleOccurrences = false,
       )
     val OPTION_LOGGER_FUNCTION =

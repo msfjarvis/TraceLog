@@ -1,6 +1,7 @@
 package dev.msfjarvis.tracelog.compiler.plugin
 
 import com.google.auto.service.AutoService
+import dev.msfjarvis.tracelog.ArtifactInfo
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector
@@ -18,7 +19,7 @@ public class TracingCompilerPluginRegistrar : CompilerPluginRegistrar() {
     val messageCollector =
       configuration.get(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY, MessageCollector.NONE)
     val loggerFunction = configuration[LOGGER_FUNCTION] ?: "kotlin.io.println"
-    val annotationName = requireNotNull(configuration[ANNOTATION_NAME])
+    val annotationName = configuration[ANNOTATION_NAME] ?: ArtifactInfo.DEFAULT_TRACELOG_ANNOTATION
 
     IrGenerationExtension.registerExtension(
       TracingIrGenerationExtension(messageCollector, loggerFunction, annotationName)
