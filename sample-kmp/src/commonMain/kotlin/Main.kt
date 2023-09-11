@@ -2,6 +2,9 @@ import dev.msfjarvis.tracelog.runtime.annotations.DebugLog
 
 fun main() {
   debuggableFunction("First parameter")
+  try {
+    throwingFunction()
+  } catch (_: Exception) {}
   LogPrinter.printLogs()
 }
 
@@ -15,4 +18,9 @@ fun recordMessage(message: Any?) {
 @DebugLog
 fun debuggableFunction(p0: String, p1: String = "Bar"): String {
   return "Debugging is cool!"
+}
+
+@DebugLog
+fun throwingFunction() {
+  throw Exception("This code is throwing!")
 }
