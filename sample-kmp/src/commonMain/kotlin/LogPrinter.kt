@@ -30,14 +30,15 @@ object LogPrinter {
       var matches = ENTER_REGEX.find(msg)
       if (matches != null) {
         val params =
-          matches
-            .getMatch(MATCH_PARAMS)
-            .split(", ")
-            .map {
-              val split = it.split("=")
-              (split[0] to split[1])
+          matches.getMatch(MATCH_PARAMS).split(", ").joinToString(", ") {
+            val split = it.split("=")
+            if (split.size == 1) {
+              ""
+            } else {
+              val (name, value) = (split[0] to split[1])
+              "${brightYellow(name)}=${brightBlue(value)}"
             }
-            .joinToString(", ") { (name, value) -> "${brightYellow(name)}=${brightBlue(value)}" }
+          }
         t.println(
           """
         ${red(matches.getMatch(MATCH_ARROW))} ${green(matches.getMatch(MATCH_IDENTIFIER))}($params)
