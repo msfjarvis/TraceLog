@@ -41,6 +41,11 @@ pluginManagement {
           "com.github.gmazzo.buildconfig",
           "com.github.gmazzo.buildconfig.gradle.plugin"
         )
+        includeModule("com.github.johnrengelman", "shadow")
+        includeModule(
+          "com.github.johnrengelman.shadow",
+          "com.github.johnrengelman.shadow.gradle.plugin"
+        )
         includeModule("com.github.gmazzo.buildconfig", "plugin")
       }
     }
