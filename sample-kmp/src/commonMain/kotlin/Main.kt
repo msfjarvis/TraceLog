@@ -16,6 +16,7 @@ fun recordMessage(message: Any?) {
 
 /** An example of an annotated method which will be transformed by the compiler plugin. */
 @DebugLog
+@Suppress("UNUSED_PARAMETER")
 fun debuggableFunction(p0: String, p1: String = "Bar"): String {
   return "Debugging is cool!"
 }
