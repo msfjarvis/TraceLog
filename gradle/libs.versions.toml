@@ -22,7 +22,7 @@ auto-ksp = "dev.zacsweers.autoservice:auto-service-ksp:1.1.0"
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 junit-legacy = "junit:junit:4.13.2"
-kct = "dev.zacsweers.kctfork:core:0.3.2"
+kct = "dev.zacsweers.kctfork:core:0.4.0"
 kotlin-compiler = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable", version.ref = "kotlin" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-gradlePlugin-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin-api", version.ref = "kotlin" }
