@@ -13,7 +13,7 @@ kotlinx-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-comp
 ksp = "com.google.devtools.ksp:1.9.0-1.0.13"
 mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.27.0" }
 shadow = "com.github.johnrengelman.shadow:8.1.1"
-spotless = "com.diffplug.spotless:6.24.0"
+spotless = "com.diffplug.spotless:6.25.0"
 
 [libraries]
 android-gradle-plugin = "com.android.tools.build:gradle:8.2.2"
