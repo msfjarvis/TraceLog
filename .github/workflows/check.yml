@@ -50,7 +50,7 @@ jobs:
     if: "github.event_name == 'push' && github.event.ref == 'refs/heads/main'"
     needs:
       - "check"
-    runs-on: macos-13
+    runs-on: macos-14
     permissions:
       actions: read
       contents: write
