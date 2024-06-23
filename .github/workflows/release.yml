@@ -45,7 +45,7 @@ jobs:
       env:
         ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.NEXUS_PUBLISH_SIGNING_KEY }}
         ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.NEXUS_PUBLISH_SIGNING_KEY_PASSWORD }}
-        SONATYPE_USERNAME: msfjarvis
+        SONATYPE_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
         SONATYPE_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
         SONATYPE_REPOSITORY_ID: ${{ needs.create_staging_repository.outputs.repository_id }}
 
