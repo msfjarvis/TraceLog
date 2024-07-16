@@ -28,4 +28,4 @@ kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", ve
 kotlin-gradlePlugin-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin-api", version.ref = "kotlin" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 mordant = "com.github.ajalt.mordant:mordant:2.7.1"
-truth = "com.google.truth:truth:1.4.3"
+truth = "com.google.truth:truth:1.4.4"
