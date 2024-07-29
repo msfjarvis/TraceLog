@@ -27,5 +27,5 @@ kotlin-compiler = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable", 
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-gradlePlugin-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin-api", version.ref = "kotlin" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
-mordant = "com.github.ajalt.mordant:mordant:2.7.1"
+mordant = "com.github.ajalt.mordant:mordant:2.7.2"
 truth = "com.google.truth:truth:1.4.4"
