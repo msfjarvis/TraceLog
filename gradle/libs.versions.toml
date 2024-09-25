@@ -1,6 +1,6 @@
 [versions]
 kotlin = "1.9.25"
-junit = "5.11.0"
+junit = "5.11.1"
 
 [plugins]
 android-library = { id = "com.android.library", version = "8.6.1" }
