@@ -3,7 +3,7 @@ kotlin = "1.9.25"
 junit = "5.11.2"
 
 [plugins]
-android-library = { id = "com.android.library", version = "8.7.0" }
+android-library = { id = "com.android.library", version = "8.7.1" }
 buildconfig = "com.github.gmazzo.buildconfig:5.5.0"
 dokka = { id = "org.jetbrains.dokka", version = "1.9.20" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
