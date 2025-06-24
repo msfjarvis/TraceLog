@@ -9,7 +9,7 @@ dokka = { id = "org.jetbrains.dokka", version = "2.0.0" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlinx-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version = "0.17.0" }
+kotlinx-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version = "0.18.0" }
 ksp = "com.google.devtools.ksp:2.1.21-2.0.2"
 mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.33.0" }
 shadow = "com.github.johnrengelman.shadow:8.1.1"
